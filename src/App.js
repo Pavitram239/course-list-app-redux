@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourses } from "./actions/actions"; // Import actions
+import CourseList from "./CourseList";
+import Inquiries from "./Inquiries"; // Add Inquiries component
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const courses = useSelector((state) => state.courses.courses) || [];
+
+  useEffect(() => {
+    dispatch(fetchCourses()); // Fetch courses on app mount
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Course List</h1>
+      <CourseList courses={courses} />
+      <Inquiries /> {/* Add Inquiries component */}
     </div>
   );
-}
+};
 
 export default App;
